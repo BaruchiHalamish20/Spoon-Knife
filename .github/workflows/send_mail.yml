@@ -15,8 +15,9 @@ jobs:
         curl -s --user "$MAILJET_API_KEY:$MAILJET_SECRET_KEY" \
           https://api.mailjet.com/v3.1/send \
           -H 'Content-Type: application/json' \
-          -d '{
-            "Messages":[
+          -d @- << EOF
+          {
+            "Messages": [
               {
                 "From": {
                   "Email": "bhalamish20@gmail.com",
@@ -28,22 +29,22 @@ jobs:
                     "Name": "Recipient"
                   }
                 ],
-                "Subject": "GitHub Action Notification - A new commit was pushed by ${{ github.actor }}",
-                
-                "TextPart": "A new commit was pushed by ${{ github.actor }}.\n" \
-                            "Commit repo: ${{ github.repository }}.\n" \
-                            "Commit hash: ${{ github.sha }}.\n" \
-                            "Other attribute in github context .\n" \
-                            "Check the repository for more details.\n",
-                "HTMLPart": "<h3>A new commit was pushed by ${{ github.actor }}.</h3>" \
-                            "<p>Commit repo: ${{ github.repository }}</p>" \
-                            "<p>Commit hash: ${{ github.sha }}</p>" \
-                            "<p>Other attribute in github context</p>" \
-                            "<p>Check the repository for more details.</p>"
-
+                "Subject": "GitHub Action Notification - A new commit was pushed by ${GITHUB_ACTOR}",
+                "TextPart": |
+                  A new commit was pushed by ${GITHUB_ACTOR}.
+                  Commit repository: ${GITHUB_REPOSITORY}.
+                  Commit hash: ${GITHUB_SHA}.
+                  Check the repository for more details.
+                "HTMLPart": |
+                  <h3>A new commit was pushed by ${GITHUB_ACTOR}.</h3>
+                  <p>Commit repository: ${GITHUB_REPOSITORY}</p>
+                  <p>Commit hash: ${GITHUB_SHA}</p>
+                  <p>Other attributes in GitHub context</p>
+                  <p>Check the repository for more details.</p>
               }
             ]
-          }'
+          }
+          EOF
       env:
         MAILJET_API_KEY: ${{ secrets.MAILJET_API_KEY }}
         MAILJET_SECRET_KEY: ${{ secrets.MAILJET_SECRET_KEY }}
