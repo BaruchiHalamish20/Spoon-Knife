@@ -1,0 +1,40 @@
+name: Send Email on Push
+
+on: [push]
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Send Email
+      run: |
+        curl -s --user "api:$MAILJET_API_KEY:$MAILJET_SECRET_KEY" \
+          https://api.mailjet.com/v3.1/send \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "Messages":[
+              {
+                "From": {
+                  "Email": "bhalamish20@gmail.com",
+                  "Name": "Your Name"
+                },
+                "To": [
+                  {
+                    "Email": "recipient@example.com",
+                    "Name": "Recipient"
+                  }
+                ],
+                "Subject": "GitHub Action Notification",
+                "TextPart": "A new commit was pushed.",
+                "HTMLPart": "<h3>A new commit was pushed to the repository.</h3>"
+              }
+            ]
+          }'
+      env:
+        MAILJET_API_KEY: ${{ secrets.MAILJET_API_KEY }}
+        MAILJET_SECRET_KEY: ${{ secrets.MAILJET_SECRET_KEY }}
+
