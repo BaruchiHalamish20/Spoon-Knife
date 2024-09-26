@@ -30,17 +30,8 @@ jobs:
                   }
                 ],
                 "Subject": "GitHub Action Notification - A new commit was pushed by ${GITHUB_ACTOR}",
-                "TextPart": |
-                  A new commit was pushed by ${GITHUB_ACTOR}.
-                  Commit repository: ${GITHUB_REPOSITORY}.
-                  Commit hash: ${GITHUB_SHA}.
-                  Check the repository for more details.
-                "HTMLPart": |
-                  <h3>A new commit was pushed by ${GITHUB_ACTOR}.</h3>
-                  <p>Commit repository: ${GITHUB_REPOSITORY}</p>
-                  <p>Commit hash: ${GITHUB_SHA}</p>
-                  <p>Other attributes in GitHub context</p>
-                  <p>Check the repository for more details.</p>
+                "TextPart": "A new commit was pushed by ${GITHUB_ACTOR}.\nCommit repo: ${GITHUB_REPOSITORY}.\nCommit hash: ${GITHUB_SHA}.\nCheck the repository for more details.",
+                "HTMLPart": "<h3>A new commit was pushed by ${GITHUB_ACTOR}.</h3><p>Commit repo: ${GITHUB_REPOSITORY}</p><p>Commit hash: ${GITHUB_SHA}</p><p>Check the repository for more details.</p>"
               }
             ]
           }
