@@ -12,7 +12,7 @@ jobs:
 
     - name: Send Email
       run: |
-        curl -s --user "api:$MAILJET_API_KEY:$MAILJET_SECRET_KEY" \
+        curl -s --user "$MAILJET_API_KEY:$MAILJET_SECRET_KEY" \
           https://api.mailjet.com/v3.1/send \
           -H 'Content-Type: application/json' \
           -d '{
@@ -24,7 +24,7 @@ jobs:
                 },
                 "To": [
                   {
-                    "Email": "recipient@example.com",
+                    "Email": "bhalamish20@gmail.com",
                     "Name": "Recipient"
                   }
                 ],
